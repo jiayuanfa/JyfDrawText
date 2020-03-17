@@ -12,7 +12,7 @@ import androidx.annotation.Nullable;
 
 public class CameraView extends View {
 
-    private static float IMAGE_WIDTH = Utils.dp2px(200f);
+    private static float IMAGE_WIDTH = Utils.dp2px(150f);
     private static float OFFSET = Utils.dp2px(100f);
 
     private Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -55,24 +55,58 @@ public class CameraView extends View {
 //        canvas.clipRect(0, 0, OFFSET + IMAGE_WIDTH / 2, OFFSET + IMAGE_WIDTH / 2);
 
         /**
+         * 绘制之前先保存画布
+         */
+        canvas.save();
+        /**
          * 使用Camera搞出三维坐标系
          * 应用到Canvas上面
          * 先移动Canvas至原点
          * camera完毕，再移动回去即可
          */
         canvas.translate(OFFSET + IMAGE_WIDTH / 2f, OFFSET + IMAGE_WIDTH / 2f);
-        camera.applyToCanvas(canvas);
+//        camera.applyToCanvas(canvas);
+        canvas.rotate(-30);
 
         /**
          * 转起来之前切割
          */
-        canvas.clipRect(- IMAGE_WIDTH / 2f, 0, IMAGE_WIDTH / 2f, IMAGE_WIDTH / 2f);
+        canvas.clipRect(- IMAGE_WIDTH, - IMAGE_WIDTH, IMAGE_WIDTH, 0);
+        canvas.rotate(30);
         canvas.translate(-(OFFSET + IMAGE_WIDTH / 2f), -(OFFSET + IMAGE_WIDTH / 2f));
 
         /**
          * 绘制图片
          */
         canvas.drawBitmap(bitmap, OFFSET, OFFSET, paint);
+        canvas.restore();
 
+//        ------------------------------------------------下半部分----------------------------------------------------
+        /**
+         * 绘制之前先保存画布
+         */
+        canvas.save();
+        /**
+         * 使用Camera搞出三维坐标系
+         * 应用到Canvas上面
+         * 先移动Canvas至原点
+         * camera完毕，再移动回去即可
+         */
+        canvas.translate(OFFSET + IMAGE_WIDTH / 2f, OFFSET + IMAGE_WIDTH / 2f);
+        canvas.rotate(-30);
+        camera.applyToCanvas(canvas);
+
+        /**
+         * 转起来之前切割
+         */
+        canvas.clipRect(- IMAGE_WIDTH, 0, IMAGE_WIDTH, IMAGE_WIDTH);
+        canvas.rotate(30);
+        canvas.translate(-(OFFSET + IMAGE_WIDTH / 2f), -(OFFSET + IMAGE_WIDTH / 2f));
+
+        /**
+         * 绘制图片
+         */
+        canvas.drawBitmap(bitmap, OFFSET, OFFSET, paint);
+        canvas.restore();
     }
 }

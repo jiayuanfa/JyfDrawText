@@ -26,11 +26,11 @@ public class Utils {
     public static Bitmap getAvatar(Resources resources, int width) {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
-        BitmapFactory.decodeResource(resources, R.mipmap.test2, options);
+        BitmapFactory.decodeResource(resources, R.mipmap.test3, options);
         options.inJustDecodeBounds = false;
         options.inDensity = options.outWidth;
         options.inTargetDensity = width;
-        return BitmapFactory.decodeResource(resources, R.mipmap.test2, options);
+        return BitmapFactory.decodeResource(resources, R.mipmap.test3, options);
     }
 
     /**
